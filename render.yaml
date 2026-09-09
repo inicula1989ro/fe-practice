@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: mag-fe
+    runtime: static
+    plan: free
+    branch: main
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    # SPA routing: React Router handles paths like /products/manage
+    # client-side, so any path that isn't a real static file needs to fall
+    # back to index.html instead of Render returning its own 404.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      # be-practice is the Render service mag-be deploys to (reused from
+      # the earlier phase-3 split) — double check this still matches the
+      # URL shown on that service's dashboard page before deploying.
+      - key: VITE_API_URL
+        value: https://be-practice-0lqi.onrender.com
