@@ -33,7 +33,10 @@ export default function AuthPage() {
       const body = await res.json();
       if (!res.ok) throw new Error(body.error?.message || 'Registration failed');
 
-      showBanner(`Account created for ${body.data.email}. You can log in now.`, 'success');
+      showBanner(
+        `Account created for ${body.data.email}. Check your email for an activation link before logging in.`,
+        'success',
+      );
       setLoginEmail(registerEmail.trim());
       setRegisterEmail('');
       setRegisterPassword('');
